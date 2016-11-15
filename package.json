@@ -4,6 +4,7 @@
   "description": "CAM02 color space.",
   "keywords": [
     "d3",
+    "d3-module",
     "color",
     "cam02",
     "CIECAM02",
