@@ -46,7 +46,7 @@ Because this package extends d3-color, previously available color functions
 are similarly available in d3-cam02
 (e.g., <em>color</em>.{rgb, brighter, darker, displayable}).
 
-<a name="jab" href="#jab">#</a> d3.<b>jab</b>(<i>J</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-cam02/blob/master/src/cam02.js#L30 "Source")<br>
+<a name="jab" href="#jab">#</a> d3.<b>jab</b>(<i>J</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/connorgr/d3-cam02/blob/master/src/cam02.js#L404 "Source")<br>
 <a href="#jab">#</a> d3.<b>jab</b>(<i>specifier</i>)<br>
 <a href="#jab">#</a> d3.<b>jab</b>(<i>color</i>)<br>
 
@@ -61,7 +61,7 @@ d3-color for examples. If a color instance is specified, it is converted to the
 RGB color space using color.rgb and then converted to Jab. (Colors already in
 the Jab color space skip the conversion to RGB.)
 
-<a name="jch" href="#jch">#</a> d3.<b>jch</b>(<i>J</i>, <i>C</i>, <i>h</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-cam02/blob/master/src/cam02.js#L30 "Source")<br>
+<a name="jch" href="#jch">#</a> d3.<b>jch</b>(<i>J</i>, <i>C</i>, <i>h</i>[, <i>opacity</i>]) [<>](https://github.com/connorgr/d3-cam02/blob/master/src/cam02.js#L328 "Source")<br>
 <a href="#jch">#</a> d3.<b>jch</b>(<i>specifier</i>)<br>
 <a href="#jch">#</a> d3.<b>jch</b>(<i>color</i>)<br>
 
