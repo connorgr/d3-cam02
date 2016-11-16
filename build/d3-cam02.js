@@ -1,4 +1,4 @@
-// https://github.com/connorgr/d3-cam02 Version 0.1.0. Copyright 2016 Connor Gramazio.
+// https://github.com/connorgr/d3-cam02 Version 0.1.2. Copyright 2016 Connor Gramazio.
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-color')) :
   typeof define === 'function' && define.amd ? define(['exports', 'd3-color'], factory) :
