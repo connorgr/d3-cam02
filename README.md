@@ -39,6 +39,15 @@ var hue = (180 / Math.PI) * Math.atan2(c.b, c.a);
 c + ""; // transforms to RGB string formatting
 ```
 
+## Installation
+###
+
+After downloading the repo, run ``npm install``, which will install any
+dependencies. You can optionally install from npm opposed to cloning directly
+from GitHub.
+
+**Dependencies:** [d3-color](https://github.com/d3/d3-color)
+
 ## API Reference
 ###
 

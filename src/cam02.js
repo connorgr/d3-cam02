@@ -14,8 +14,8 @@
 // values in the JCh constructor, but the d3 color object stores only lightness
 // (J), chroma (C), and hue (h).
 //
-import define, {extend} from "./define";
-import {Color, rgbConvert, Rgb} from "./color";
+
+import {color, rgb} from "d3-color";
 import {deg2rad, rad2deg} from "./math";
 
 // used for brighter and darker functions
@@ -309,7 +309,7 @@ function cam022rgb(J, C, h) {
 
 function jchConvert(o) {
   if (o instanceof JCh) return new JCh(o.J, o.C, o.h, o.opacity);
-  if (!(o instanceof Rgb)) o = rgbConvert(o);
+  if (!(o instanceof rgb)) o = rgb(o);
 
   var xyz = rgb2xyz(o.r, o.g, o.b),
       lmsConeResponses = xyz2cat02(xyz.x,xyz.y,xyz.z),
@@ -332,20 +332,23 @@ export function JCh(J, C, h, opacity) {
   this.opacity = +opacity;
 }
 
-define(JCh, jch, extend(Color, {
-  brighter: function(k) {
-      return new JCh(this.J + Kn * (k === null ? 1 : k), this.C, this.h,
-          this.opacity);
-    },
-  darker: function(k) {
-    return new JCh(this.J - Kn * (k === null ? 1 : k), this.C, this.h,
-        this.opacity);
-  },
-  rgb: function() {
-    var rgb = cam022rgb(this.J, this.C, this.h);
-    return new Rgb(rgb.r, rgb.g, rgb.b, this.opacity);
-  }
-}));
+var jchPrototype = JCh.prototype = jch.prototype = Object.create(color.prototype);
+jchPrototype.constructor = JCh;
+
+jchPrototype.brighter = function(k) {
+  return new JCh(this.J + Kn * (k === null ? 1 : k), this.C, this.h,
+      this.opacity);
+};
+
+jchPrototype.darker = function(k) {
+  return new JCh(this.J - Kn * (k === null ? 1 : k), this.C, this.h,
+      this.opacity);
+};
+
+jchPrototype.rgb = function () {
+  var converted = cam022rgb(this.J, this.C, this.h);
+  return rgb(converted.r, converted.g, converted.b, this.opacity);
+};
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -363,7 +366,7 @@ function jabConvert(o) {
     return new Jab(o.J, o.a, o.b, o.opacity);
   }
 
-  if (!(o instanceof Rgb)) o = rgbConvert(o);
+  if (!(o instanceof rgb)) o = rgb(o);
 
   var xyz = rgb2xyz(o.r, o.g, o.b),
       lmsConeResponses = xyz2cat02(xyz.x,xyz.y,xyz.z),
@@ -414,44 +417,52 @@ export function Jab(J, a, b, opacity) {
   this.opacity = opacity;
 }
 
-define(Jab, jab, extend(Color, {
-  brighter: function(k) {
-      return new Jab(this.J + Kn * (k === null ? 1 : k), this.a, this.b, this.opacity);
-    },
-  darker: function(k) {
-    return new Jab(this.J - Kn * (k === null ? 1 : k), this.a, this.b, this.opacity);
-  },
-  rgb: function() {
-    var coefs = altCam02Coef.ucs;
 
-    var J = this.J, a = this.a, b = this.b;
-    // Get the new M using trigonomic identities
-    // MPrime = (1.0/coefs.c2) * Math.log(1.0 + coefs.c2*cam02.M); // log=ln
-    // var a = MPrime * Math.cos(o.h),
-    //     b = MPrime * Math.sin(o.h);
-    // x*x = (x*cos(y))*(x(cos(y))) + (x*sin(y))*(x(sin(y)))
-    var newMPrime = Math.sqrt(a*a + b*b),
-        newM = (Math.exp(newMPrime * coefs.c2) - 1.0) / coefs.c2;
+var jabPrototype = Jab.prototype = jab.prototype = Object.create(color.prototype);
+jabPrototype.constructor = JCh;
 
-    var newh = rad2deg*Math.atan2(b,a);
-    if(newh < 0) newh = 360.0 + newh;
+jabPrototype.brighter = function(k) {
+  return new Jab(this.J + Kn * (k === null ? 1 : k), this.a, this.b,
+      this.opacity);
+};
 
-    // M = C * Math.pow(CIECAM02_VC.fl, 0.25);
-    // C = M / Math.pow(CIECAM02_VC.fl, 0.25);
-    var newC = newM / Math.pow(CIECAM02_VC.fl, 0.25);
+jabPrototype.darker = function(k) {
+  return new Jab(this.J - Kn * (k === null ? 1 : k), this.a, this.b,
+      this.opacity);
+};
 
-    // Last, derive the new Cam02J
-    // JPrime = ((1.0 + 100.0*coefs.c1) * cam02.J) / (1.0 + coefs.c1 * cam02.J)
-    // simplified: var cam02J = JPrime / (1.0 + coefs.c1*(100.0 - JPrime));
-    // if v = (d*x) / (b + a*x), x = (b*(v/d)) / (1 - a(v/d))
-    var newCam02J = J / (1.0 + coefs.c1*(100.0 - J));
+jabPrototype.rgb = function() {
+  var coefs = altCam02Coef.ucs;
 
-    var rgb = cam022rgb(newCam02J, newC, newh);
+  var J = this.J, a = this.a, b = this.b;
+  // Get the new M using trigonomic identities
+  // MPrime = (1.0/coefs.c2) * Math.log(1.0 + coefs.c2*cam02.M); // log=ln
+  // var a = MPrime * Math.cos(o.h),
+  //     b = MPrime * Math.sin(o.h);
+  // x*x = (x*cos(y))*(x(cos(y))) + (x*sin(y))*(x(sin(y)))
+  var newMPrime = Math.sqrt(a*a + b*b),
+      newM = (Math.exp(newMPrime * coefs.c2) - 1.0) / coefs.c2;
 
-    return new Rgb(rgb.r, rgb.g, rgb.b, this.opacity);
-  },
-  de: cam02de(altCam02Coef.ucs)
-}));
+  var newh = rad2deg*Math.atan2(b,a);
+  if(newh < 0) newh = 360.0 + newh;
+
+  // M = C * Math.pow(CIECAM02_VC.fl, 0.25);
+  // C = M / Math.pow(CIECAM02_VC.fl, 0.25);
+  var newC = newM / Math.pow(CIECAM02_VC.fl, 0.25);
+
+  // Last, derive the new Cam02J
+  // JPrime = ((1.0 + 100.0*coefs.c1) * cam02.J) / (1.0 + coefs.c1 * cam02.J)
+  // simplified: var cam02J = JPrime / (1.0 + coefs.c1*(100.0 - JPrime));
+  // if v = (d*x) / (b + a*x), x = (b*(v/d)) / (1 - a(v/d))
+  var newCam02J = J / (1.0 + coefs.c1*(100.0 - J));
+
+  var converted = cam022rgb(newCam02J, newC, newh);
+
+  return rgb(converted.r, converted.g, converted.b, this.opacity);
+};
+
+jabPrototype.de = cam02de(altCam02Coef.ucs);
+
 
 export function interpolateJab(start, end) {
   // constant, linear, and colorInterpolate are taken from d3-interpolate
