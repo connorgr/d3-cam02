@@ -1,48 +1,49 @@
 var tape = require("tape"),
-    color = require("../");
+    d3_color = require("d3-color"),
+    d3_cam02 = require("../");
 
 require("./cam02Equal.js");
 require("./rgbEqual.js");
 
 tape("jch(…) returns an instance of cam02ucs and color", function(test) {
-  var c = color.jch(80, 40, 50);
-  test.ok(c instanceof color.jch);
-  test.ok(c instanceof color.color);
+  var c = d3_cam02.jch(80, 40, 50);
+  test.ok(c instanceof d3_cam02.jch);
+  test.ok(c instanceof d3_color.color);
   test.equal(c.constructor.name, "JCh");
   test.end();
 });
 
 tape("jch(…) object construction works as expected", function(test) {
-  test.equal(color.jch(80, 40, 50).J, 80);
-  test.equal(color.jch(80, 40, 50).C, 40);
-  test.equal(color.jch(80, 40, 50).h, 50);
+  test.equal(d3_cam02.jch(80, 40, 50).J, 80);
+  test.equal(d3_cam02.jch(80, 40, 50).C, 40);
+  test.equal(d3_cam02.jch(80, 40, 50).h, 50);
   test.end();
 });
 
 tape("jch.toString() converts to RGB and formats as rgb(…) or rgba(…)", function(test) {
-  test.equal(color.jch("#abcdef") + "", "rgb(171, 205, 239)");
-  test.equal(color.jch("moccasin") + "", "rgb(255, 228, 181)");
-  test.equal(color.jch("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
-  test.equal(color.jch("hsla(60, 100%, 20%, 0.4)") + "", "rgba(102, 102, 0, 0.4)");
-  test.equal(color.jch("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
-  test.equal(color.jch(color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  test.equal(d3_cam02.jch("#abcdef") + "", "rgb(171, 205, 239)");
+  test.equal(d3_cam02.jch("moccasin") + "", "rgb(255, 228, 181)");
+  test.equal(d3_cam02.jch("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  test.equal(d3_cam02.jch("hsla(60, 100%, 20%, 0.4)") + "", "rgba(102, 102, 0, 0.4)");
+  test.equal(d3_cam02.jch("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  test.equal(d3_cam02.jch(d3_color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
   test.end();
 });
 
 tape("jab(…) object construction works as expected", function(test) {
-  test.equal(Math.round(color.jab(80, 40, 50).J), 80);
-  test.equal(Math.round(color.jab(80, 40, 50).a), 40);
-  test.equal(Math.round(color.jab(80, 40, 50).b), 50);
+  test.equal(Math.round(d3_cam02.jab(80, 40, 50).J), 80);
+  test.equal(Math.round(d3_cam02.jab(80, 40, 50).a), 40);
+  test.equal(Math.round(d3_cam02.jab(80, 40, 50).b), 50);
   test.end();
 });
 
 tape("jab.toString() converts to RGB and formats as rgb(…) or rgba(…)", function(test) {
-  test.equal(color.jab("#abcdef") + "", "rgb(171, 205, 239)");
-  test.equal(color.jab("moccasin") + "", "rgb(255, 228, 181)");
-  test.equal(color.jab("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
-  test.equal(color.jab("hsla(60, 100%, 20%, 0.4)") + "", "rgba(102, 102, 0, 0.4)");
-  test.equal(color.jab("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
-  test.equal(color.jab(color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  test.equal(d3_cam02.jab("#abcdef") + "", "rgb(171, 205, 239)");
+  test.equal(d3_cam02.jab("moccasin") + "", "rgb(255, 228, 181)");
+  test.equal(d3_cam02.jab("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  test.equal(d3_cam02.jab("hsla(60, 100%, 20%, 0.4)") + "", "rgba(102, 102, 0, 0.4)");
+  test.equal(d3_cam02.jab("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  test.equal(d3_cam02.jab(d3_color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
   test.end();
 });
 
@@ -50,7 +51,7 @@ tape("jab.toString() converts to RGB and formats as rgb(…) or rgba(…)", func
 // have psychophysical measurements from colorometers, please contribute!
 tape("cam02 JCh color channels are correct", function(test) {
   function jchChannel(rgbStr, attr, eq) {
-    return test.equal(color.jch(rgbStr)[attr].toFixed(2), eq);
+    return test.equal(d3_cam02.jch(rgbStr)[attr].toFixed(2), eq);
   }
   jchChannel("rgb(0,0,0)", "J", "0.00");
   jchChannel("rgb(50,50,50)", "J", "14.92");
@@ -67,7 +68,7 @@ tape("cam02 JCh color channels are correct", function(test) {
 
 tape("cam02ucs color channels are correct", function(test) {
   function jabChannel(rgbStr, attr, eq) {
-    return test.equal(color.jab(rgbStr)[attr].toFixed(2), eq);
+    return test.equal(d3_cam02.jab(rgbStr)[attr].toFixed(2), eq);
   }
   jabChannel("rgb(0,0,0)", "J", "0.00");
   jabChannel("rgb(50,50,50)", "J", "22.96");

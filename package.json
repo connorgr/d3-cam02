@@ -23,10 +23,13 @@
     "url": "https://github.com/connorgr/d3-cam02.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n d3 -o build/d3-cam02.js -- index.js",
+    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -g d3-color:d3 -n d3 -o build/d3-cam02.js -- index.js",
     "test": "tape 'test/**/*-test.js' && eslint index.js src test",
     "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-cam02.js -c -m -o build/d3-cam02.min.js",
     "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cd ../d3.github.com && cp ../d3-cam02/build/d3-cam02.js d3-cam02.v0.1.js && cp ../d3-cam02/build/d3-cam02.min.js d3-cam02.v0.1.min.js && git add d3-cam02.v1.js d3-cam02.v1.min.js && git commit -m \"d3-cam02 ${VERSION}\" && git push && cd - && zip -j build/d3-cam02.zip -- LICENSE README.md build/d3-cam02.js build/d3-cam02.min.js"
+  },
+  "dependencies": {
+    "d3-color": "1"
   },
   "devDependencies": {
     "eslint": "2",
