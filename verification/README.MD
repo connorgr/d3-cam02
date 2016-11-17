@@ -1,7 +1,7 @@
 # d3-cam02 verification
 
 Because CIECAM02 and CIECAM02-UCS color spaces require many complex and long
-computation we wanted to verify that our implementation matches other libraries
+computations we wanted to verify that our implementation matches other libraries
 that were verified to match psychophysical groundtruth data.
 
 There are two verification scripts. One uses Billy Bigg's C implementation,
@@ -27,7 +27,7 @@ RGB: [255,255,255] |:::| XYZ100: [95.05,100.0,108.9]
 RGB: [255,0,0]     |:::| XYZ100: [41.24,21.26,1.93]
 ```
 
-Example viewing conditions in.dat:
+Example XYZ100 in.dat formatted colors taken from above:
 ```
 0.0 0.0 0.0
 3.03 3.19 3.47
