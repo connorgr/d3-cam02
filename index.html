@@ -171,8 +171,11 @@ code {
   <p><strong>d3-cam02</strong> is a beta-release
     <a href="http://d3js.org">D3</a> extension
     that supports CIECAM02-UCS Jab and CIECAM02 JCh color specifications.</p>
+
   <p>d3-cam02 is open sourced
-    <a href="https://github.com/connorgr/d3-cam02">here</a>.</p>
+    <a href="https://github.com/connorgr/d3-cam02">here</a>. If you want to take
+    a look at the extension in full, check it out on
+    <a href="https://unpkg.com/d3-cam02">unpkg</a>.</p>
 
   <strong>Known Issues</strong>
   <ul>
@@ -205,15 +208,18 @@ code {
 
 <h2>Installation <a name="installation" href="#installation">📎</a></h2>
 <section>
-  <p>If interested in just using the d3-cam02, simply download d3-cam02.js and
-      load it with <code>&#60;script src="d3-cam02.js">&#60;/script></code>
-      after loading d3.v4.js. You can also find d3-cam02 on npm.</p>
-
-  <p>If building from scratch, run <code>npm install</code> after downloading
-    or cloning the source code, which will install any required dependencies.
-    Note that this requires
-    <a href="https://nodejs.org/en/">node.js</a> and
-    <a href="https://www.npmjs.com/">npm</a>.</p>
+  <p>To access the latest version of d3-cam02, grab it on
+    <a href="https://unpkg.com/d3-cam02">unpkg</a>. Be sure to load d3-cam02
+    after d3-color is loaded (be it through d3.v4.js, d3-color.js, or
+    otherwise).</p>
+  <p>If installing and building from scratch, download the repo either through
+      <a href="https://github.com/connorgr/d3-cam02">GitHub</a> or through
+      <a href="https://npmjs.com/d3-cam02">npm</a>.
+      Once you've downloaded it, just run <code>npm install</code>, which will
+      the required dependencies.
+      Note that building requires
+      <a href="https://nodejs.org/en/">node.js</a> and
+      <a href="https://www.npmjs.com/">npm</a>.</p>
 
   <p>D3 module dependencies:
     <a href="https://github.com/d3/d3-color">d3-color</a>.</p>
@@ -442,11 +448,19 @@ code {
 </div>
 
 <p style="width: 100%; text-align: center; margin-top: 100px;color: #aaa;">Provided free-to-use and open-sourced. See Github for specific licensing information.</p>
+  <script src="https://d3js.org/d3-selection.v1.min.js"></script>
 
-  <script src="https://gramaz.io/d3-cam02/lib/d3.v4.min.js"></script>
-  <script src="https://gramaz.io/d3-cam02/build/d3-cam02.js"></script>
-  <script src="https://d3js.org/d3-path.v1.min.js"></script>
-  <script src="https://d3js.org/d3-shape.v1.min.js"></script>
+  <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+  <script src="https://d3js.org/d3-color.v1.min.js"></script>
+
+  <script src="https://d3js.org/d3-scale.v1.min.js"></script>
+
+  <script src="https://d3js.org/d3-ease.v1.min.js"></script>
+  <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+  <script src="https://d3js.org/d3-timer.v1.min.js"></script>
+  <script src="https://d3js.org/d3-transition.v1.min.js"></script>
+
+  <script src="https://unpkg.com/d3-cam02"></script>
   <script>
   // Discretizes the interpolation as rectangles equal to the number of divisions
   function interpolationFill(container, w, h, start, end) {
@@ -464,13 +478,13 @@ code {
         divisions = w - marginRight;
 
     var rectW = (w-100)/(divisions+1),
-        jab = d3.scale.linear().domain([0, divisions-1])
+        jab = d3.scaleLinear().domain([0, divisions-1])
             .interpolate(d3.interpolateJab)
             .range([d3.rgb(start), d3.rgb(end)]),
-        lab = d3.scale.linear().domain([0, divisions-1])
+        lab = d3.scaleLinear().domain([0, divisions-1])
             .interpolate(d3.interpolateLab)
             .range([d3.rgb(start), d3.rgb(end)]),
-        rgb = d3.scale.linear().domain([0, divisions-1])
+        rgb = d3.scaleLinear().domain([0, divisions-1])
             .interpolate(d3.interpolateRgb)
             .range([d3.rgb(start), d3.rgb(end)]);
 
@@ -522,7 +536,7 @@ code {
     start = d3.jab(start);
     end = d3.jab(end);
 
-    var interp = d3.scale.linear().domain([0, 9])
+    var interp = d3.scaleLinear().domain([0, 9])
             .interpolate(d3.interpolateJab)
             .range([d3.rgb(start), d3.rgb(end)]);
 

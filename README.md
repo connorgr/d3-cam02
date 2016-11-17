@@ -1,5 +1,8 @@
 # d3-cam02
 
+To access the latest version of d3-cam02, grab it on
+[unpkg](https://unpkg.com/d3-cam02).
+
 This module extends D3's native color support to also include CIECAM02 color.
 CIECAM02 is an updated color model that serves as an alternative to perceptually
 modeled spaces like CIELAB and CIELCh.
@@ -44,7 +47,7 @@ c + ""; // transforms to RGB string formatting
 
 After downloading the repo, run ``npm install``, which will install any
 dependencies. You can optionally install from npm opposed to cloning directly
-from GitHub.
+from GitHub. Make sure to load d3-cam02 after d3-color.
 
 **Dependencies:** [d3-color](https://github.com/d3/d3-color)
 
