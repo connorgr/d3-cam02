@@ -1,6 +1,6 @@
 {
   "name": "d3-cam02",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "CAM02 color space.",
   "keywords": [
     "d3",
@@ -18,6 +18,7 @@
     "url": "http://gramaz.io"
   },
   "main": "build/d3-cam02.js",
+  "module": "index",
   "jsnext:main": "index",
   "repository": {
     "type": "git",
