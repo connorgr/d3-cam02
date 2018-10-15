@@ -89,3 +89,11 @@ string is provided, it is parsed and then converted to the Lab color space. See
 d3-color for examples. If a color instance is specified, it is converted to the
 RGB color space using `color.rgb` and then converted to JCh. (Colors already in
 the JCh color space skip the conversion to RGB.)
+
+<a href="#interpolateJab">#</a> d3.<b>interpolateJab</b>(<i>a</i>, <i>b</i>) [<>](https://github.com/d3/d3-ciecam02/blob/master/src/interpolateJab.js "Source")<br>
+
+Returns an jab color space interpolator between the two colors a and b. The colors a and b need not be in jab; they will be converted to jab using d3.jab. If either color’s hue or chroma is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is an RGB string.
+
+<a href="#interpolateJabLong">#</a> d3.<b>interpolateJabLong</b>(<i>a</i>, <i>b</i>) [<>](https://github.com/d3/d3-ciecam02/blob/master/src/interpolateJab.js "Source")<br>
+
+Like interpolateJab, but does not use the shortest path between hues.

@@ -1,14 +1,19 @@
 import {jabConvert} from './jabConvert';
+import {jab} from "./../index";
+
+
+// constant, linear, and colorInterpolate are taken from d3-interpolate
+// the colorInterpolate function is `nogamma` in the d3-interpolate's color.js
+function constant(x) { return function() { return x; } }
+
+function linear(a, d) { return function(t) { return a + t * d; }; }
+
+function colorInterpolate(a, b) {
+	var d = b - a;
+	return d ? linear(a, d) : constant(isNaN(a) ? b : a);
+}
 
 export default function interpolateJab(start, end) {
-	// constant, linear, and colorInterpolate are taken from d3-interpolate
-	// the colorInterpolate function is `nogamma` in the d3-interpolate's color.js
-	function constant(x) { return function() { return x; } }
-	function linear(a, d) { return function(t) { return a + t * d; }; }
-	function colorInterpolate(a, b) {
-		var d = b - a;
-		return d ? linear(a, d) : constant(isNaN(a) ? b : a);
-	}
 
 	start = jabConvert(start);
 	end = jabConvert(end);
@@ -27,3 +32,4 @@ export default function interpolateJab(start, end) {
 		return start + "";
 	};
 }
+export var jabLong = jab(colorInterpolate);
