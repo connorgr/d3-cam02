@@ -3,7 +3,7 @@ var tape = require("tape"),
 		interpolate = require("../"),
 		jab = interpolate.jab;
 
-tape("interpolateJab(a, b) converts a and b to HSLuv colors", function(test) {
+tape("interpolateJab(a, b) converts a and b to Jab colors", function(test) {
 	test.equal(interpolate.interpolateJab("steelblue", "brown")(0), color.rgb("steelblue") + "");
 	test.equal(interpolate.interpolateJab("steelblue", jab("brown"))(1), color.rgb("brown") + "");
 	test.equal(interpolate.interpolateJab("steelblue", color.rgb("brown"))(1), color.rgb("brown") + "");
