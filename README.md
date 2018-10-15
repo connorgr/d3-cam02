@@ -24,7 +24,7 @@ recommend Luo and Li's paper entitled "CIECAM02 and Its Recent Developments".
 d3-cam02 follows the same rules as d3-color. For example, to get the
 CIECAM02-UCS Jab representation of "steelblue":
 ```js
-var c = d3.jab("steelblue"); // {r: 70, g: 130, b: 180, opacity: 1}
+var c = d3.jab("steelblue"); // {j: 70, a: 130, b: 180, opacity: 1}
 ```
 
 You can also define Jab or JCh colors directly:
